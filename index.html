@@ -28,26 +28,35 @@
         const viewer = new Cesium.Viewer('cesiumContainer', {
             skyAtmosphere: false, // 关闭大气层效果
             baseLayerPicker: false, // 关闭图层选择器
+            baseLayer: new Cesium.ImageryLayer(
+                new Cesium.UrlTemplateImageryProvider({
+                    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                    subdomains: ['a', 'b', 'c']
+                }), {
+                brightness: 1.3,
+                contrast: 1.6,
+                hue: 0.85
+            }),
         });
-        const imagery = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-            url: `https://t0.tianditu.gov.cn/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${tdtToken}`,
-            layer: "vec",
-            style: "default",
-            format: "image/jpeg",
-            tileMatrixSetID: "GoogleMapsCompatible",
-            maximumLevel: 18 // 最大缩放级别
-        }));
-        imagery.hue = 3;
-        imagery.contrast = -1.2;
+        // const imagery = viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+        //     url: `https://t0.tianditu.gov.cn/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${tdtToken}`,
+        //     layer: "vec",
+        //     style: "default",
+        //     format: "image/jpeg",
+        //     tileMatrixSetID: "GoogleMapsCompatible",
+        //     maximumLevel: 18 // 最大缩放级别
+        // }));
+        // imagery.hue = 3;
+        // imagery.contrast = -1.2;
 
-        // 加载矢量注记
-        viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-            url: `https://t0.tianditu.gov.cn/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${tdtToken}`,
-            layer: "cva",
-            style: "default",
-            format: "image/jpeg",
-            tileMatrixSetID: "GoogleMapsCompatible"
-        }));
+        // // 加载矢量注记
+        // viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+        //     url: `https://t0.tianditu.gov.cn/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${tdtToken}`,
+        //     layer: "cva",
+        //     style: "default",
+        //     format: "image/jpeg",
+        //     tileMatrixSetID: "GoogleMapsCompatible"
+        // }));
         // 加载白模
         const tileset = Cesium.Cesium3DTileset.fromIonAssetId(75343, {
             maximumScreenSpaceError: 1.5
